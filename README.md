@@ -60,15 +60,6 @@ VortexManager is an java application designed to efficiently manage and process 
 
 ---
 
-## 🧩 Usage
-
-1. **Load Shapefiles**: Use the "Import" button or menu to load a shapefile for visualization.
-2. **Navigate the Map**: Utilize the toolbar for map navigation tools like pan, zoom in/out, and full extent.
-3. **Inspect Features**: Click the "Info" button to retrieve detailed information about map features.
-
----
-
-
 ## 📝 License
 
 This project is licensed under the [MIT License](LICENSE).
