@@ -1,4 +1,4 @@
-package views;
+package test;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -21,9 +21,15 @@ public class MainWindow extends JFrame implements ActionListener {
 	          gisToolMenuItem, userRegistrationMenuItem, userLoginMenuItem;
 	JPopupMenu popupMenu;
 	JToolBar toolbar;
-	JButton newButton, openButton, saveButton, exitButton, pointButton, lineButton, triangleButton, rectButton, rectSelectButton, moveButton, eraseButton, editButton;
+	JButton newButton, openButton, exportCsvButton, saveButton, viewButton, exitButton, shapeButton, pointButton, lineButton, triangleButton, rectButton, rectSelectButton, moveButton, eraseButton, editButton;
 //	JTextArea ta;
 	JLabel imageLabel;
+	// Define a JLabel for username display
+    private JLabel usernameLabel;
+
+private DrawPanel drawPannel;
+
+private MapPannel mapPannel;
 	
 	
 	// Add the main method here.
@@ -36,15 +42,18 @@ public class MainWindow extends JFrame implements ActionListener {
 		}
 
 	public MainWindow() {
-		setTitle("Vortex Manager - Draw Pannel");
+		setTitle("Vortex Manager");
 		menuBar = new JMenuBar();
+		
+		// Initialize the shared DrawPanel instance
+		drawPannel = new DrawPanel();
 
 //		ta = new JTextArea();
 //		ta.setBounds(10, 300, 500, 600);
 
 		imageLabel = new JLabel("");
 		imageLabel.setBounds(10, 10, 300, 200);
-		imageLabel.setBackground(getForeground().DARK_GRAY);
+		imageLabel.setBackground(getForeground().WHITE);
 
 		fileMenu = new JMenu("File");
 		fileMenu.setMnemonic(KeyEvent.VK_F);
@@ -54,7 +63,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		newMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		newMenuItem.addActionListener(this);
 
-		openMenuItem = new JMenuItem("Open", new ImageIcon(getClass().getResource("open.png")));
+		openMenuItem = new JMenuItem("Import Data", new ImageIcon(getClass().getResource("import_csv.png")));
 		openMenuItem.setMnemonic(KeyEvent.VK_O);
 		openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
 		openMenuItem.addActionListener(this);
@@ -190,8 +199,8 @@ public class MainWindow extends JFrame implements ActionListener {
 			@Override
 			public void menuSelected(MenuEvent arg0) {
 				JOptionPane.showMessageDialog(getContentPane(),
-						"This is a complete example of Java \n" + "Swing Menu, MenuItem, Dialogs, \n"+
-				"Db Functionality " + "GeoTool Lib Use \n"+"Drawing Tool");
+						"This is a application for\n" + "managing your spatial data \n"+
+				"with ease and reliable way");
 			}
 		});
 
@@ -246,41 +255,77 @@ public class MainWindow extends JFrame implements ActionListener {
 		toolbar = new JToolBar();
 		newButton = new JButton(new ImageIcon(getClass().getResource("new.png")));
 		newButton.addActionListener(this);
-		openButton = new JButton(new ImageIcon(getClass().getResource("open.png")));
+		openButton = new JButton(new ImageIcon(getClass().getResource("import_csv.png")));
 		openButton.addActionListener(this);
+		exportCsvButton = new JButton(new ImageIcon(getClass().getResource("export_csv.png")));
+		exportCsvButton.addActionListener(this);
 		saveButton = new JButton(new ImageIcon(getClass().getResource("save.png")));
 		saveButton.addActionListener(this);
+		viewButton = new JButton(new ImageIcon(getClass().getResource("view.png")));
+		viewButton.addActionListener(this);
 		exitButton = new JButton(new ImageIcon(getClass().getResource("exit.png")));
 		exitButton.addActionListener((e) -> System.exit(0));
+		
+		shapeButton = new JButton(new ImageIcon(getClass().getResource("shape2.png")));
+		shapeButton.addActionListener(this);
+		
+		// Add JLabel to show username
+        usernameLabel = new JLabel("User: " + UserLogin.loggedInUser); // Assuming loggedInUser is a static variable holding the username
+        usernameLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        usernameLabel.setForeground(new Color(70, 130, 180));
+        usernameLabel.setHorizontalAlignment(SwingConstants.RIGHT);  // Align right
+        
+     // Load the user icon image
+        ImageIcon userIcon = new ImageIcon(getClass().getResource("user.png")); // Replace with your icon file path
+
+        // Update the usernameLabel to display the icon instead of text
+        usernameLabel.setIcon(userIcon);
+        usernameLabel.setText(UserLogin.loggedInUser); // Clear any existing text
 
 		toolbar.add(newButton);
 		toolbar.add(openButton);
+		toolbar.add(exportCsvButton);
 		toolbar.add(saveButton);
+		toolbar.add(viewButton);
 		toolbar.add(exitButton);
+		toolbar.add(shapeButton);
+		
+		
+		// Add the usernameLabel to the toolbar on the right side
+	    toolbar.add(Box.createHorizontalGlue());  // Pushes the label to the far right
+	    toolbar.add(usernameLabel);  // Add username label to the right of the toolbar
+
+	    // Set the toolbar layout to make it flexible
+	    toolbar.setLayout(new BoxLayout(toolbar, BoxLayout.X_AXIS));
+        
+        
+        
 
 		add(toolbar, BorderLayout.NORTH);
+		
+		 
 		
 		
 		toolbar = new JToolBar();
 		toolbar.setOrientation(JToolBar.VERTICAL);
 		pointButton = new JButton(new ImageIcon(getClass().getResource("point.png")));
-		pointButton.addActionListener(this);
+		pointButton.addActionListener(e -> drawPannel.setDrawingMode("POINT"));
 		lineButton = new JButton(new ImageIcon(getClass().getResource("line.png")));
-		lineButton.addActionListener(this);
+		lineButton.addActionListener(e -> drawPannel.setDrawingMode("LINE"));
 		triangleButton = new JButton(new ImageIcon(getClass().getResource("triangle.png")));
-		triangleButton.addActionListener(this);
+		triangleButton.addActionListener(e -> drawPannel.setDrawingMode("TRIANGLE"));
 		rectButton = new JButton(new ImageIcon(getClass().getResource("rectangle.png")));
-		rectButton.addActionListener((e) -> System.exit(0));
+		rectButton.addActionListener(e -> drawPannel.setDrawingMode("RECTANGLE"));
 		
 		moveButton = new JButton(new ImageIcon(getClass().getResource("move.png")));
-		moveButton.addActionListener((e) -> System.exit(0));
+		moveButton.addActionListener(e -> drawPannel.setDrawingMode("MOVE"));
 		editButton = new JButton(new ImageIcon(getClass().getResource("edit.png")));
 		editButton.addActionListener((e) -> System.exit(0));
 		eraseButton = new JButton(new ImageIcon(getClass().getResource("erase.png")));
-		eraseButton.addActionListener((e) -> System.exit(0));
+		eraseButton.addActionListener(e -> drawPannel.setDrawingMode("DELETE"));
 		rectSelectButton = new JButton(new ImageIcon(getClass().getResource("rectangle_selection.png")));
-		rectSelectButton.addActionListener((e) -> System.exit(0));
-
+		rectSelectButton.addActionListener(e -> drawPannel.setDrawingMode("RANGE_QUERY"));
+		
 		toolbar.add(pointButton);
 		toolbar.add(lineButton);
 		toolbar.add(triangleButton);
@@ -291,11 +336,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		toolbar.add(rectSelectButton);
 		add(toolbar, BorderLayout.WEST);
 		
-		
-		
 		add(imageLabel, BorderLayout.CENTER);
-		
-		DrawPannel drawPannel = new DrawPannel();
 		
 		add(drawPannel, BorderLayout.CENTER);
 		
@@ -307,121 +348,47 @@ public class MainWindow extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-//		if (e.getSource() == newMenuItem || e.getSource() == newButton) {
-//			ta.setText("Add the new content here!");
-//		}
+		if (e.getSource() == newMenuItem || e.getSource() == newButton) {
+			mapPannel.setVisible(false);
+			drawPannel.setVisible(true);
+		}
 		if (e.getSource() == openMenuItem || e.getSource() == csvSubMenuItem || e.getSource() == openButton) {
-			JFileChooser fc = new JFileChooser();
-			fc.setAcceptAllFileFilterUsed(false);
-			FileNameExtensionFilter extFilter = new FileNameExtensionFilter("text file", "txt", "fin");
-			fc.addChoosableFileFilter(extFilter);
-			int i = fc.showOpenDialog(this);
-			if (i == JFileChooser.APPROVE_OPTION) {
-				File f = fc.getSelectedFile();
-				String filepath = f.getPath();
-				try {
-					BufferedReader reader = new BufferedReader(new FileReader(filepath));
-					String s1 = "", s2 = "";
-					while ((s1 = reader.readLine()) != null) {
-						s2 += s1 + "\n";
-					}
-//					ta.setText(s2);
-					reader.close();
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
+			CSVHandler csvHandler = new CSVHandler();
+			drawPannel.importGeometriesFromCSV(csvHandler);
+	        
 		}
-
-		if (e.getSource() == imageSubMenuItem) {
-			JFileChooser fc = new JFileChooser();
-			fc.setAcceptAllFileFilterUsed(false);
-			FileNameExtensionFilter extFilter = new FileNameExtensionFilter("*.Images", "jpg", "jpeg", "gif", "png");
-			fc.addChoosableFileFilter(extFilter);
-			int i = fc.showOpenDialog(this);
-			if (i == JFileChooser.APPROVE_OPTION) {
-				File file = fc.getSelectedFile();
-				String path = file.getAbsolutePath();
-				ImageIcon iconPath = new ImageIcon(path);
-				Image image = iconPath.getImage();
-				Image resizedImg = image.getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(),
-						image.SCALE_SMOOTH);
-				ImageIcon icon = new ImageIcon(resizedImg);
-				imageLabel.setIcon(icon);
-				add(imageLabel, BorderLayout.CENTER);
-			}
+		
+		if (e.getSource() == csvSubMenuItem2 || e.getSource() == exportCsvButton) {
+			CSVHandler csvHandler = new CSVHandler();
+			drawPannel.exportGeometriesToCSV(csvHandler);
 		}
-
+		
+		
+		if (e.getSource() == imageSubMenuItem || e.getSource() == shapeButton) {
+			
+			mapPannel = new MapPannel();
+			add(mapPannel, BorderLayout.CENTER);
+			// Initialize the map separately
+			mapPannel.initialize();
+			
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setFileFilter(new FileNameExtensionFilter("Shapefiles", "shp"));
+	        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+	            mapPannel.loadShapefile(fileChooser.getSelectedFile());
+	        }
+	        
+	        
+	        drawPannel.setVisible(false);
+		}
+		
+	
 		if (e.getSource() == saveMenuItem || e.getSource() == saveButton) {
-			JFileChooser fc = new JFileChooser();
-			fc.setAcceptAllFileFilterUsed(false);
-			FileNameExtensionFilter extFilter = new FileNameExtensionFilter("text file", "txt", "fin");
-			fc.addChoosableFileFilter(extFilter);
-			int i = fc.showSaveDialog(this);
-//			if (i == JFileChooser.APPROVE_OPTION) {
-//				File f = fc.getSelectedFile();
-//				try {
-//					BufferedWriter writer = new BufferedWriter(new FileWriter(f));
-//					writer.write(ta.getText());
-//					writer.close();
-//				} catch (Exception ex) {
-//					ex.printStackTrace();
-//				}
-//			}
+			drawPannel.saveGeometry();
 		}
-
-//		if (e.getSource() == cutMenuItem) {
-//			ta.cut();
-//		}
-//		if (e.getSource() == copyMenuItem) {
-//			ta.copy();
-//		}
-//		if (e.getSource() == pasteMenuItem) {
-//			ta.paste();
-//		}
-//		if (e.getSource() == selectAllMenuItem) {
-//			ta.selectAll();
-//		}
-//		if (e.getSource() == colorChooserMenuItem) {
-//			Color c = JColorChooser.showDialog(null, "Choose a Color", ta.getForeground());
-//			if (ta.getText() != null && c != null)
-//				ta.setForeground(c);
-//		}
 		
-//		if (e.getSource() == gisToolMenuItem) {
-//			SwingGISTool gisTool = new SwingGISTool();
-//			try {
-//				gisTool.displayShapefile();
-//			} catch (Exception e1) {
-//				e1.printStackTrace();
-//			}
-//		}
-		
-//		if (e.getSource() == userRegistrationMenuItem) {
-//			EventQueue.invokeLater(new Runnable() {
-//				public void run() {
-//					try {
-//						UserRegistration userRegistration = new UserRegistration();
-//						userRegistration.setVisible(true);
-//					} catch (Exception e) {
-//						e.printStackTrace();
-//					}
-//				}
-//			});
-//		}
-//		
-//		if (e.getSource() == userLoginMenuItem) {
-//			EventQueue.invokeLater(new Runnable() {
-//				public void run() {
-//					try {
-//						UserLogin userLogin = new UserLogin();
-//						userLogin.setVisible(true);
-//					} catch (Exception e) {
-//						e.printStackTrace();
-//					}
-//				}
-//			});
-//		}
+		if (e.getSource() == viewButton) {
+			drawPannel.loadGeometries();
+		}
 		
 	}
 }
