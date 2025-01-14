@@ -4,6 +4,12 @@ VortexManager is an innovative application designed to efficiently manage and pr
 
 ---
 
+📸 Screenshots
+![image](https://github.com/user-attachments/assets/cbc75963-ee91-4e85-981d-87bdf783ba15)
+![image](https://github.com/user-attachments/assets/6bdf5121-1e0a-4118-abde-cf2eaa601258)
+
+
+
 ## 🚀 Features
 
 - **Shapefile Import and Visualization**: Seamlessly import and render shapefiles with a robust visualization panel.
