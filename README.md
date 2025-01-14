@@ -1,7 +1,3 @@
-Here’s a detailed and professional template for the GitHub README of your **VortexManager** project. You can customize it further based on specific details about the project.
-
----
-
 # VortexManager
 
 VortexManager is an innovative application designed to efficiently manage and process geospatial and environmental data. With powerful tools and a user-friendly interface, it is tailored for professionals and researchers working in geospatial analytics, environmental management, and related fields.
@@ -22,7 +18,7 @@ VortexManager is an innovative application designed to efficiently manage and pr
 
 - **Programming Language**: Java
 - **Libraries**:
-  - [GeoTools](https://geotools.org): For geospatial data processing and visualization.
+  - [GeoTools](https://geotools.org): 3rd party library only For shapefile data processing and visualization.
   - [Swing](https://docs.oracle.com/javase/tutorial/uiswing/): For the graphical user interface.
 - **Build Tool**: Maven or Gradle (depending on your configuration)
 
