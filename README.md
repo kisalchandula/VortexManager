@@ -5,8 +5,7 @@ VortexManager is an java application designed to efficiently manage and process 
 ---
 
 📸 Screenshots
-<img src="https://github.com/user-attachments/assets/cbc75963-ee91-4e85-981d-87bdf783ba15" alt="Screenshot 1" width="400" /> <img src="https://github.com/user-attachments/assets/6bdf5121-1e0a-4118-abde-cf2eaa601258" alt="Screenshot 2" width="400" />
-
+<img src="https://github.com/user-attachments/assets/cbc75963-ee91-4e85-981d-87bdf783ba15" alt="Screenshot 1" width="400" /> <img src="https://github.com/user-attachments/assets/6bdf5121-1e0a-4118-abde-cf2eaa601258" alt="Screenshot 2" width="400" /> <img src="[https://github.com/user-attachments/assets/cbc75963-ee91-4e85-981d-87bdf783ba15](https://github.com/user-attachments/assets/315599b2-59a1-4654-bec7-5b7f5465cdce)" alt="Screenshot 1" width="400" />
 
 
 ## 🚀 Features
@@ -25,6 +24,7 @@ VortexManager is an java application designed to efficiently manage and process 
   - All Geometry modules developed using Java for admin spatial data objects. 
   - [GeoTools](https://geotools.org): 3rd party library only For shapefile data processing and visualization.
   - [Swing](https://docs.oracle.com/javase/tutorial/uiswing/): For the graphical user interface.
+  - MySQL for Database
 - **Build Tool**: Maven or Gradle (depending on your configuration)
 
 ---
