@@ -1,8 +1,7 @@
-package views;
+package test;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.*;
 
 import javax.swing.*;
@@ -15,6 +14,7 @@ public class UserLogin extends JFrame {
     private JPasswordField passwordField;
     private JButton btnNewButton;
     private JPanel contentPane;
+    public static String loggedInUser = "";
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -78,29 +78,34 @@ public class UserLogin extends JFrame {
         btnNewButton.setBorder(BorderFactory.createEmptyBorder());
         btnNewButton.setContentAreaFilled(false);
         btnNewButton.setOpaque(true);
-        btnNewButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String userName = textField.getText();
-                String password = new String(passwordField.getPassword());
-                try {
-                    Connection connection = DriverManager.getConnection(
-                            "jdbc:mysql://localhost:3306/mydb", "root", "Admin_2022");
-
-                    PreparedStatement st = connection.prepareStatement(
-                            "Select username, password from user where username=? and password=?");
-
-                    st.setString(1, userName);
-                    st.setString(2, password);
-                    ResultSet rs = st.executeQuery();
-                    if (rs.next()) {
-                        dispose();
-                        JOptionPane.showMessageDialog(btnNewButton, "You have successfully logged in!");
-                    } else {
-                        JOptionPane.showMessageDialog(btnNewButton, "Wrong Username or Password");
-                    }
-                } catch (SQLException sqlException) {
-                    sqlException.printStackTrace();
+        btnNewButton.addActionListener((ActionEvent e) -> {
+            String userName = textField.getText();
+            String password = new String(passwordField.getPassword());
+            try (Connection connection = DatabaseConnection.getConnection()) {
+                if (connection == null) {
+                    JOptionPane.showMessageDialog(btnNewButton, "Database connection failed!");
+                    return;
                 }
+
+                PreparedStatement st = connection.prepareStatement(
+                        "SELECT username, password FROM users WHERE username=? AND password=?");
+
+                st.setString(1, userName);
+                st.setString(2, password);
+                ResultSet rs = st.executeQuery();
+
+                if (rs.next()) {
+                    dispose();
+                    loggedInUser = userName;
+                    MainWindow mainframe = new MainWindow();
+                    mainframe.setVisible(true);
+                    JOptionPane.showMessageDialog(btnNewButton, "You have successfully logged in!");
+                } else {
+                    JOptionPane.showMessageDialog(btnNewButton, "Wrong Username or Password");
+                }
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
+                JOptionPane.showMessageDialog(btnNewButton, "An error occurred while processing your request.");
             }
         });
 

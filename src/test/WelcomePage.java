@@ -1,4 +1,4 @@
-package views;
+package test;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -69,7 +69,15 @@ public class WelcomePage extends JFrame {
         centerPanel.add(Box.createVerticalGlue());
 
         // Add ActionListeners
-        loginButton.addActionListener(e -> JOptionPane.showMessageDialog(this, "Login button clicked!"));
+        loginButton.addActionListener(e ->{
+        	setVisible(false);
+        	
+        	// Open UserLogin window
+            UserLogin loginFrame = new UserLogin();
+            loginFrame.setVisible(true);
+            
+        });
+        		
         registerButton.addActionListener(e -> JOptionPane.showMessageDialog(this, "Register button clicked!"));
 
         return centerPanel;
