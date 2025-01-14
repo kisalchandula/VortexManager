@@ -1,6 +1,6 @@
 # VortexManager
 
-VortexManager is an innovative application designed to efficiently manage and process geospatial and environmental data. With powerful tools and a user-friendly interface, it is tailored for professionals and researchers working in geospatial analytics, environmental management, and related fields.
+VortexManager is an java application designed to efficiently manage and process geospatial and environmental data. With powerful tools and a user-friendly interface, it is tailored for professionals and researchers working in geospatial analytics, environmental management, and related fields.
 
 ---
 
