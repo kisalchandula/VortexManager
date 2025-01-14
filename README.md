@@ -8,7 +8,6 @@ VortexManager is an innovative application designed to efficiently manage and pr
 
 - **Shapefile Import and Visualization**: Seamlessly import and render shapefiles with a robust visualization panel.
 - **Interactive Map Controls**: Includes essential map navigation tools such as pan, zoom, full extent, and detailed information retrieval.
-- **Coordinate Tracking**: Real-time display of cursor coordinates in the selected coordinate reference system (CRS).
 - **Customizable Toolbar**: Add or modify tools for specific tasks and workflows.
 - **Extensibility**: Easily extend the application to include custom data processing and analysis functions.
 
@@ -18,6 +17,7 @@ VortexManager is an innovative application designed to efficiently manage and pr
 
 - **Programming Language**: Java
 - **Libraries**:
+  - All Geometry modules developed using Java for admin spatial data objects. 
   - [GeoTools](https://geotools.org): 3rd party library only For shapefile data processing and visualization.
   - [Swing](https://docs.oracle.com/javase/tutorial/uiswing/): For the graphical user interface.
 - **Build Tool**: Maven or Gradle (depending on your configuration)
