@@ -65,17 +65,6 @@ VortexManager is an innovative application designed to efficiently manage and pr
 
 ---
 
-## 📸 Screenshots
-
-_Include screenshots of your application's key functionalities._
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow the [contribution guidelines](CONTRIBUTING.md) to get started.
-
----
 
 ## 📝 License
 
@@ -83,10 +72,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-## 📧 Contact
 
-For questions or feedback, please contact **Kisal Wijeyesekera** at kisal@example.com.
-
----
-
-Let me know if you'd like to make any changes or need help generating additional sections for your README!
