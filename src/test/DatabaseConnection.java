@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DatabaseConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/geometrydb";
     private static final String USER = "root";
-    private static final String PASSWORD = "pass123";
+    private static final String PASSWORD = "hope20";
 
     public static Connection getConnection() {
         Connection connection = null;

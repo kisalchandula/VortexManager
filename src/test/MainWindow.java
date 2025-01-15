@@ -2,9 +2,6 @@ package test;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
-import java.util.Locale;
-
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
