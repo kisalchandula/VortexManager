@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 class Triangle extends Geometry {
     int x3; // Third point of the triangle
-	int y3;
+    int y3;
 
     public Triangle(int x, int y, int x2, int y2, int x3, int y3) {
         super(x, y, x2, y2); // x, y represent the first point; x2, y2 represent the second point
@@ -56,5 +56,35 @@ class Triangle extends Geometry {
     @Override
     public String getType() {
         return "Triangle";
+    }
+
+    // Load from database
+    @Override
+    public Geometry loadFromDatabase(ResultSet rs) throws SQLException {
+        int id = rs.getInt("id");
+        int x = rs.getInt("x");
+        int y = rs.getInt("y");
+        int x2 = rs.getInt("x2");
+        int y2 = rs.getInt("y2");
+        int x3 = rs.getInt("x3");
+        int y3 = rs.getInt("y3");
+        Triangle triangle = new Triangle(x, y, x2, y2, x3, y3);
+        triangle.id = id;
+        return triangle;
+    }
+    
+    @Override
+    public void updateGeometryInDatabase(Connection conn) throws SQLException {
+        String sql = "UPDATE triangles SET x = ?, y = ?, x2 = ?, y2 = ?, x3 = ?, y3 = ? WHERE id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, x);
+            stmt.setInt(2, y);
+            stmt.setInt(3, x2);
+            stmt.setInt(4, y2);
+            stmt.setInt(5, x3);
+            stmt.setInt(6, y3);
+            stmt.setInt(7, id);
+            stmt.executeUpdate();
+        }
     }
 }

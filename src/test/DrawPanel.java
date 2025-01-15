@@ -136,7 +136,7 @@ public class DrawPanel extends JPanel {
                 return;
             }
             else if (selectedGeometry != null) {
-                updateGeometryInDatabase(selectedGeometry);
+            	geometryController.updateGeometry(selectedGeometry);
                 selectedGeometry = null; // Clear selection
                 isMoveMode = false; 
             } else {
@@ -164,54 +164,6 @@ public class DrawPanel extends JPanel {
         }
     }
     
-    private void updateGeometryInDatabase(Geometry geometry) throws SQLException {
-        if (geometry instanceof Rectangle) {
-            String sql = "UPDATE rectangles SET x = ?, y = ?, width = ?, height = ? WHERE id = ?";
-            try (PreparedStatement stmt = geometryController.conn.prepareStatement(sql)) {
-                Rectangle rect = (Rectangle) geometry;
-                stmt.setInt(1, rect.x);
-                stmt.setInt(2, rect.y);
-                stmt.setInt(3, Math.abs(rect.x2 - rect.x)); // width
-                stmt.setInt(4, Math.abs(rect.y2 - rect.y)); // height
-                stmt.setInt(5, rect.id);
-                stmt.executeUpdate();
-            }
-        } else if (geometry instanceof Line) {
-            String sql = "UPDATE line SET x1 = ?, y1 = ?, x2 = ?, y2 = ? WHERE id = ?";
-            try (PreparedStatement stmt = geometryController.conn.prepareStatement(sql)) {
-                Line line = (Line) geometry;
-                stmt.setInt(1, line.x);
-                stmt.setInt(2, line.y);
-                stmt.setInt(3, line.x2);
-                stmt.setInt(4, line.y2);
-                stmt.setInt(5, line.id);
-                stmt.executeUpdate();
-            }
-        } else if (geometry instanceof Point) {
-            String sql = "UPDATE points SET x = ?, y = ? WHERE id = ?";
-            try (PreparedStatement stmt = geometryController.conn.prepareStatement(sql)) {
-                Point point = (Point) geometry;
-                stmt.setInt(1, point.x);
-                stmt.setInt(2, point.y);
-                stmt.setInt(3, point.id);
-                stmt.executeUpdate();
-            }
-        } else if (geometry instanceof Triangle) {
-            String sql = "UPDATE triangles SET x = ?, y = ?, x2 = ?, y2 = ?, x3 = ?, y3 = ? WHERE id = ?";
-            try (PreparedStatement stmt = geometryController.conn.prepareStatement(sql)) {
-                Triangle triangle = (Triangle) geometry;
-                stmt.setInt(1, triangle.x);
-                stmt.setInt(2, triangle.y);
-                stmt.setInt(3, triangle.x2);
-                stmt.setInt(4, triangle.y2);
-                stmt.setInt(5, triangle.x3);
-                stmt.setInt(6, triangle.y3);
-                stmt.setInt(7, triangle.id);
-                stmt.executeUpdate();
-            }
-        }
-    }
-
     
     private Geometry findGeometryAt(int x, int y) {
         for (Geometry geometry : geometries) {
@@ -263,16 +215,6 @@ public class DrawPanel extends JPanel {
         double b = x1 - x2;
         double c = x2 * y1 - x1 * y2;
         return Math.abs(a * x + b * y + c) / Math.sqrt(a * a + b * b);
-    }
-    
-    private void deleteGeometryFromDatabase(Geometry geometry) throws SQLException {
-        String deleteSql = "DELETE FROM geometries WHERE id = ?";
-        
-        
-        try (PreparedStatement stmt = geometryController.conn.prepareStatement(deleteSql)) {
-            stmt.setInt(1, geometry.id);
-            stmt.executeUpdate();
-        }
     }
     
     
@@ -396,7 +338,7 @@ public class DrawPanel extends JPanel {
 
                     if (response == JOptionPane.YES_OPTION) {
                         try {
-                            deleteGeometryFromDatabase(selectedGeometry);
+                            geometryController.deleteGeometry(selectedGeometry);
                             currentGeometry = null; // Clear the current geometry
                             geometries.remove(selectedGeometry);
                             repaint();
