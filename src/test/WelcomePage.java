@@ -25,8 +25,8 @@ public class WelcomePage extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 300);
         setLayout(new BorderLayout());
-        getContentPane().setBackground(new Color(204, 255, 204)); // Light green color
-        setLocationRelativeTo(null); // Center the frame on the screen
+        getContentPane().setBackground(new Color(204, 255, 204)); 
+        setLocationRelativeTo(null); 
 
         // Header Panel
         JPanel headerPanel = createHeaderPanel();

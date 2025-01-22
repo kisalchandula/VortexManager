@@ -46,11 +46,11 @@ class GeometryController {
     }
     
     public void updateGeometry(Geometry geometry) throws SQLException {
-        geometry.updateGeometryInDatabase(conn); // Update the geometry in the database
+        geometry.updateGeometryInDatabase(conn); 
     }
     
     public void deleteGeometry(Geometry geometry) throws SQLException {
-        geometry.deleteGeometryFromDatabase(conn); // Update the geometry in the database
+        geometry.deleteGeometryFromDatabase(conn); 
     }
 
     public void close() throws SQLException {

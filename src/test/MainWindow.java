@@ -87,10 +87,7 @@ private MapPannel mapPannel;
 		exportSubMenu = new JMenu("Export");
 		csvSubMenuItem2 = new JMenuItem("CSV");
 		csvSubMenuItem2.addActionListener(this);
-		imageSubMenuItem2 = new JMenuItem("Shapefile");
-		imageSubMenuItem2.addActionListener(this);
 		exportSubMenu.add(csvSubMenuItem2);
-		exportSubMenu.add(imageSubMenuItem2);
 
 		fileMenu.add(newMenuItem);
 		fileMenu.add(openMenuItem);
@@ -106,19 +103,19 @@ private MapPannel mapPannel;
 		cutMenuItem = new JMenuItem("Cut", KeyEvent.VK_T);
 		cutMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
 		cutMenuItem.addActionListener(this);
-		copyMenuItem = new JMenuItem("Copy", KeyEvent.VK_C);
+		copyMenuItem = new JMenuItem("Move", KeyEvent.VK_C);
 		copyMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
 		copyMenuItem.addActionListener(this);
 		pasteMenuItem = new JMenuItem("Paste", KeyEvent.VK_P);
 		pasteMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.CTRL_MASK));
 		pasteMenuItem.addActionListener(this);
-		selectAllMenuItem = new JMenuItem("Select All", KeyEvent.VK_A);
+		selectAllMenuItem = new JMenuItem("Select Area", KeyEvent.VK_A);
 		selectAllMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK));
 		selectAllMenuItem.addActionListener(this);
 
 		editMenu.add(cutMenuItem);
 		editMenu.add(copyMenuItem);
-		editMenu.add(pasteMenuItem);
+//		editMenu.add(pasteMenuItem);
 		editMenu.addSeparator();
 		editMenu.add(selectAllMenuItem);
 
@@ -159,23 +156,23 @@ private MapPannel mapPannel;
 		extrasMenu.add(radioButtonDeMenuItem);
 		bgRB.add(radioButtonDeMenuItem);
 		extrasMenu.addSeparator();
-		colorChooserMenuItem = new JMenuItem("Change Text Color");
-		colorChooserMenuItem.addActionListener(this);
-		extrasMenu.add(colorChooserMenuItem);
-		extrasMenu.addSeparator();
-		
-		gisToolMenuItem = new JMenuItem("GIS Tool");
+//		colorChooserMenuItem = new JMenuItem("Change Text Color");
+//		colorChooserMenuItem.addActionListener(this);
+//		extrasMenu.add(colorChooserMenuItem);
+//		extrasMenu.addSeparator();
+//		
+		gisToolMenuItem = new JMenuItem("GIS Toolbox");
 		gisToolMenuItem.addActionListener(this);
 		extrasMenu.add(gisToolMenuItem);
-		
-		extrasMenu.addSeparator();
-		userRegistrationMenuItem = new JMenuItem("User Registration");
-		userRegistrationMenuItem.addActionListener(this);
-		extrasMenu.add(userRegistrationMenuItem);
-		extrasMenu.addSeparator();
-		userLoginMenuItem = new JMenuItem("User Login");
-		userLoginMenuItem.addActionListener(this);
-		extrasMenu.add(userLoginMenuItem);
+//		
+//		extrasMenu.addSeparator();
+//		userRegistrationMenuItem = new JMenuItem("User Registration");
+//		userRegistrationMenuItem.addActionListener(this);
+//		extrasMenu.add(userRegistrationMenuItem);
+//		extrasMenu.addSeparator();
+//		userLoginMenuItem = new JMenuItem("User Login");
+//		userLoginMenuItem.addActionListener(this);
+//		extrasMenu.add(userLoginMenuItem);
 		
 		//Java Graphic
 		graphicMenu = new JMenu("Graphic");
@@ -252,20 +249,25 @@ private MapPannel mapPannel;
 		toolbar = new JToolBar();
 		newButton = new JButton(new ImageIcon(getClass().getResource("new.png")));
 		newButton.addActionListener(this);
+		newButton.setToolTipText("New");
 		openButton = new JButton(new ImageIcon(getClass().getResource("import_csv.png")));
 		openButton.addActionListener(this);
+		openButton.setToolTipText("Import from csv");
 		exportCsvButton = new JButton(new ImageIcon(getClass().getResource("export_csv.png")));
 		exportCsvButton.addActionListener(this);
+		exportCsvButton.setToolTipText("Export to csv");
 		saveButton = new JButton(new ImageIcon(getClass().getResource("save.png")));
 		saveButton.addActionListener(this);
+		saveButton.setToolTipText("Save Geometry(DataBase)");
 		viewButton = new JButton(new ImageIcon(getClass().getResource("view.png")));
 		viewButton.addActionListener(this);
+		viewButton.setToolTipText("View from Database");
 		exitButton = new JButton(new ImageIcon(getClass().getResource("exit.png")));
 		exitButton.addActionListener((e) -> System.exit(0));
-		
+		exitButton.setToolTipText("Exit");
 		shapeButton = new JButton(new ImageIcon(getClass().getResource("shape2.png")));
 		shapeButton.addActionListener(this);
-		
+		shapeButton.setToolTipText("Import Shapefile");
 		// Add JLabel to show username
         usernameLabel = new JLabel("User: " + UserLogin.loggedInUser); // Assuming loggedInUser is a static variable holding the username
         usernameLabel.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -300,35 +302,43 @@ private MapPannel mapPannel;
 
 		add(toolbar, BorderLayout.NORTH);
 		
-		 
-		
 		
 		toolbar = new JToolBar();
 		toolbar.setOrientation(JToolBar.VERTICAL);
 		pointButton = new JButton(new ImageIcon(getClass().getResource("point.png")));
+		pointButton.setToolTipText("Draw a point"); // Add tooltip
 		pointButton.addActionListener(e -> drawPannel.setDrawingMode("POINT"));
+
 		lineButton = new JButton(new ImageIcon(getClass().getResource("line.png")));
+		lineButton.setToolTipText("Draw a line"); // Add tooltip
 		lineButton.addActionListener(e -> drawPannel.setDrawingMode("LINE"));
+
 		triangleButton = new JButton(new ImageIcon(getClass().getResource("triangle.png")));
+		triangleButton.setToolTipText("Draw a triangle"); // Add tooltip
 		triangleButton.addActionListener(e -> drawPannel.setDrawingMode("TRIANGLE"));
+
 		rectButton = new JButton(new ImageIcon(getClass().getResource("rectangle.png")));
+		rectButton.setToolTipText("Draw a rectangle"); // Add tooltip
 		rectButton.addActionListener(e -> drawPannel.setDrawingMode("RECTANGLE"));
-		
+
 		moveButton = new JButton(new ImageIcon(getClass().getResource("move.png")));
+		moveButton.setToolTipText("Move a geometry"); // Add tooltip
 		moveButton.addActionListener(e -> drawPannel.setDrawingMode("MOVE"));
-		editButton = new JButton(new ImageIcon(getClass().getResource("edit.png")));
-		editButton.addActionListener((e) -> System.exit(0));
+
 		eraseButton = new JButton(new ImageIcon(getClass().getResource("erase.png")));
+		eraseButton.setToolTipText("Delete a geometry"); // Add tooltip
 		eraseButton.addActionListener(e -> drawPannel.setDrawingMode("DELETE"));
+
 		rectSelectButton = new JButton(new ImageIcon(getClass().getResource("rectangle_selection.png")));
+		rectSelectButton.setToolTipText("Perform a range query with a rectangle"); // Add tooltip
 		rectSelectButton.addActionListener(e -> drawPannel.setDrawingMode("RANGE_QUERY"));
+
 		
 		toolbar.add(pointButton);
 		toolbar.add(lineButton);
 		toolbar.add(triangleButton);
 		toolbar.add(rectButton);
 		toolbar.add(moveButton);
-		toolbar.add(editButton);
 		toolbar.add(eraseButton);
 		toolbar.add(rectSelectButton);
 		add(toolbar, BorderLayout.WEST);
@@ -346,8 +356,12 @@ private MapPannel mapPannel;
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == newMenuItem || e.getSource() == newButton) {
-			mapPannel.setVisible(false);
+			if(mapPannel != null) {
+				mapPannel.setVisible(false);
+			}
+			
 			drawPannel.setVisible(true);
+			drawPannel.clearPanel();
 		}
 		if (e.getSource() == openMenuItem || e.getSource() == csvSubMenuItem || e.getSource() == openButton) {
 			CSVHandler csvHandler = new CSVHandler();
@@ -374,7 +388,7 @@ private MapPannel mapPannel;
 	            mapPannel.loadShapefile(fileChooser.getSelectedFile());
 	        }
 	        
-	        
+	        drawPannel.clearPanel();
 	        drawPannel.setVisible(false);
 		}
 		
@@ -387,5 +401,25 @@ private MapPannel mapPannel;
 			drawPannel.loadGeometries();
 		}
 		
+		if (e.getSource() == cutMenuItem) {
+			drawPannel.setDrawingMode("DELETE");
+		}
+		
+		if (e.getSource() == copyMenuItem) {
+			drawPannel.setDrawingMode("MOVE");
+		}
+		
+		if (e.getSource() == selectAllMenuItem) {
+			drawPannel.setDrawingMode("RANGE_QUERY");
+		}
+		
+		if (e.getSource() == gisToolMenuItem) {
+			mapPannel = new MapPannel();
+			
+			add(mapPannel, BorderLayout.CENTER);
+			mapPannel.initialize();
+			
+			drawPannel.setVisible(false);
+		}
 	}
 }

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 
-// Main View/Controller Class
+// DrawPanel Class
 public class DrawPanel extends JPanel {
     private int x, y, x2, y2;
     private GeometryController geometryController;
@@ -61,17 +61,45 @@ public class DrawPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g); // Clears the canvas
 
+        // Draw all geometries in blue
         g.setColor(Color.BLUE);
         for (Geometry geometry : geometries) {
-            if (geometry != null) { // Ensure geometry is not null
+            if (geometry != null) { 
                 geometry.draw(g);
             }
         }
 
         if (currentGeometry != null) {
+            if (isRangeQueryMode && currentGeometry instanceof Rectangle) {
+                g.setColor(Color.BLACK); // Use black for the query rectangle
+            } else {
+                g.setColor(Color.BLUE); // Default color
+            }
             currentGeometry.draw(g);
         }
     }
+    
+    
+    
+    public void clearPanel() {
+        // Clear all geometries
+        geometries.clear();
+        newGeometries.clear();
+        currentGeometry = null;
+
+        // Reset drawing states
+        isDrawingRectangle = false;
+        isDrawingLine = false;
+        isDrawingPoint = false;
+        isDrawingTriangle = false;
+        isDeleteMode = false;
+        isMoveMode = false;
+        isRangeQueryMode = false;
+        selectedGeometry = null;
+
+        repaint();
+    }
+
     
 
     public void importGeometriesFromCSV(CSVHandler csvHandler) {
@@ -403,7 +431,11 @@ public class DrawPanel extends JPanel {
                     y = y2;
                 }
                 repaint();
+                
+                
+                
             }
+            
 
             if (isDrawingTriangle && trianglePointCount == 2) {
                 // Update temporary third point for visual feedback

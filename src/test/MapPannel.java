@@ -65,6 +65,8 @@ public class MapPannel extends JPanel {
 
     private void createDefaultToolBar() {
         toolBar = new JToolBar();
+        
+        mapPane = new JMapPane(mapContent);
 
         // Add default GeoTools toolbar actions
         JButton panButton = new JButton(new PanAction(mapPane));
@@ -80,7 +82,29 @@ public class MapPannel extends JPanel {
         // Add listeners to toggle tools
         panButton.addActionListener(e -> mapPane.setCursorTool(new PanTool()));
         zoomInButton.addActionListener(e -> mapPane.setCursorTool(new ZoomInTool()));
-        zoomOutButton.addActionListener(e -> mapPane.setCursorTool(new ZoomOutTool()));
+        zoomOutButton.addActionListener(e -> {
+            if (mapPane != null && mapPane.getDisplayArea() != null) {
+                ReferencedEnvelope displayArea = mapPane.getDisplayArea();
+                double scaleFactor = 2.0; // Zoom out by a factor of 2
+
+                double centerX = displayArea.getMedian(0);
+                double centerY = displayArea.getMedian(1);
+                double width = displayArea.getWidth() * scaleFactor;
+                double height = displayArea.getHeight() * scaleFactor;
+
+                ReferencedEnvelope newArea = new ReferencedEnvelope(
+                    centerX - width / 2,
+                    centerX + width / 2,
+                    centerY - height / 2,
+                    centerY + height / 2,
+                    displayArea.getCoordinateReferenceSystem()
+                );
+
+                mapPane.setDisplayArea(newArea);
+            } else {
+                System.err.println("Error: mapPane or displayArea is null");
+            }
+        });
         infoButton.addActionListener(e -> mapPane.setCursorTool(new InfoTool()));
         
         add(toolBar, BorderLayout.NORTH);
