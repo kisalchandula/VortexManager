@@ -65,5 +65,3 @@ VortexManager is an java application designed to efficiently manage and process 
 This project is licensed under the [MIT License](LICENSE).
 
 ---
-
-
