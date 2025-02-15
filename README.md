@@ -8,6 +8,9 @@ VortexManager is an java application designed to efficiently manage and process 
 
 <img src="https://github.com/user-attachments/assets/cbc75963-ee91-4e85-981d-87bdf783ba15" alt="Screenshot 1" width="400" /> 
 <img src="https://github.com/user-attachments/assets/6bdf5121-1e0a-4118-abde-cf2eaa601258" alt="Screenshot 2" width="400" />
+<img src="https://github.com/user-attachments/assets/19a7b3ae-ef46-4991-af86-24f35f464b85" alt="Screenshot 2" width="400" />
+
+
 
 
 ## 🚀 Features
